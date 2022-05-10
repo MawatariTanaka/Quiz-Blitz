@@ -1,0 +1,73 @@
+$primary-color: #2f4858;
+$secondary-color: #ffc75f;
+$authentication-color: #c1554d;
+
+header {
+    display: flex;
+    padding: 1rem 1rem;
+    align-items: center;
+}
+
+#page-name {
+    margin-right: 4rem;
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -2px;
+}
+
+.thunder-1 {
+    width: 2.25rem;
+    margin: 0 -4px;
+}
+
+.thunder-2 {
+    width: 2.25rem;
+    margin: 0 -3px 0 3px;
+}
+
+.sub-page-name {
+    color: $secondary-color;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+#navigation-container {
+    display: flex;
+    margin-right: auto;
+}
+
+.navigation,
+.authentication {
+    position: relative;
+    width: 8rem;
+    padding: 0.5rem 0;
+    margin-right: 1rem;
+    border: 1px solid $primary-color;
+    border-radius: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    overflow: hidden;
+}
+
+.navigation-active {
+    background-color: $primary-color;
+    color: white;
+}
+
+#authentication-container {
+    display: flex;
+}
+
+.authentication {
+    border-color: $authentication-color;
+    color: $authentication-color;
+}
+
+.authentication-active {
+    background-color: $authentication-color;
+    color: white;
+}
+
+@media only screen and (max-width: 992px) {}
+
+@media only screen and (max-width: 600px) {}
