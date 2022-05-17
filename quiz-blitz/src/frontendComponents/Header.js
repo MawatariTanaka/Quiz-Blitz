@@ -1,9 +1,15 @@
+import { Link } from 'react-router-dom';
+
 export default function Header({ currentPage, setCurrentPage }) {
     let thunder1 = require('./image/thunder-1.png');
     let thunder2 = require('./image/thunder-2.png');
     return (
         <header>
-            <div id="page-name">
+            <Link
+                to="/"
+                onClick={() => setCurrentPage('home')}
+                className="page-name"
+            >
                 Qu
                 <img className="thunder-1" src={thunder1} alt="" />z{' '}
                 <span className="sub-page-name">
@@ -13,40 +19,44 @@ export default function Header({ currentPage, setCurrentPage }) {
                         tz
                     </i>
                 </span>
-            </div>
-            <nav id="navigation-container">
-                <div
+            </Link>
+            <nav className="navigation-container">
+                <Link
+                    to="/"
                     onClick={() => setCurrentPage('home')}
                     className={`navigation ${
                         currentPage === 'home' ? 'navigation-active' : ''
                     }`}
                 >
                     Trang Chủ
-                </div>
-                <div
+                </Link>
+                <Link
+                    to="courses"
                     onClick={() => setCurrentPage('course')}
                     className={`navigation ${
                         currentPage === 'course' ? 'navigation-active' : ''
                     }`}
                 >
                     Khóa Học
-                </div>
-                <div
+                </Link>
+                <Link
+                    to="challenges"
                     onClick={() => setCurrentPage('challenge')}
                     className={`navigation ${
                         currentPage === 'challenge' ? 'navigation-active' : ''
                     }`}
                 >
                     Thử Thách
-                </div>
-                <div
+                </Link>
+                <Link
+                    to="contests"
                     onClick={() => setCurrentPage('contest')}
                     className={`navigation ${
                         currentPage === 'contest' ? 'navigation-active' : ''
                     }`}
                 >
                     Thi Đấu
-                </div>
+                </Link>
             </nav>
             <nav id="authentication-container">
                 <div className="authentication">Đăng nhập</div>

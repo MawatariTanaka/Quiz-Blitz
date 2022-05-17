@@ -8,12 +8,15 @@ header {
     align-items: center;
 }
 
-#page-name {
+.page-name {
     margin-right: 4rem;
     font-size: 3rem;
     font-weight: 600;
     letter-spacing: -2px;
+    text-decoration: none;
+    color: $primary-color;
 }
+
 
 .thunder-1 {
     width: 2.25rem;
@@ -31,7 +34,7 @@ header {
     letter-spacing: -1px;
 }
 
-#navigation-container {
+.navigation-container {
     display: flex;
     margin-right: auto;
 }
@@ -45,7 +48,9 @@ header {
     border: 1px solid $primary-color;
     border-radius: 2rem;
     text-align: center;
+    text-decoration: none;
     font-size: 1rem;
+    color: $primary-color;
     overflow: hidden;
 }
 

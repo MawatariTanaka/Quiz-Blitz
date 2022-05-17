@@ -1,14 +1,26 @@
 import { useState } from 'react';
 import './App.scss';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Header from './frontendComponents/Header';
-import Main from './frontendComponents/Main';
+import Home from './frontendComponents/subdomain/Home';
+import Courses from './frontendComponents/subdomain/Courses';
+import Contests from './frontendComponents/subdomain/Contests';
+import Challenges from './frontendComponents/subdomain/Challenges';
+
 function App() {
     const [currentPage, setCurrentPage] = useState('home');
     return (
-        <div className="App">
+        <Router className="App">
             <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
-            <Main currentPage={currentPage} />
-        </div>
+
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/contests" element={<Contests />} />
+                <Route path="/challenges" element={<Challenges />} />
+            </Routes>
+        </Router>
     );
 }
 
