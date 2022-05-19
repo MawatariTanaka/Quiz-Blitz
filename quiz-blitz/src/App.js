@@ -15,7 +15,7 @@ import Challenges from './frontendComponents/subdomain/Challenges';
 function App() {
     const [currentPage, setCurrentPage] = useState('home');
     const [quizList, setQuizList] = useState(null);
-    const [todayQuiz, setTodayQuiz] = useState(null);
+    const [dailyQuiz, setDailyQuiz] = useState(null);
     const [a, setA] = useState(0);
     useEffect(() => {
         const quizCollectionReference = collection(db, 'questions');
@@ -31,9 +31,10 @@ function App() {
         getQuizList();
     }, [a]);
     useEffect(() => {
-        if (quizList) {
-            const today = quizList[Math.floor(Math.random() * quizList.length)];
-            setTodayQuiz(today);
+        if (quizList && !dailyQuiz) {
+            const daily = quizList[Math.floor(Math.random() * quizList.length)];
+            setDailyQuiz(daily);
+            console.log(daily);
         }
     }, [quizList]);
 
@@ -42,7 +43,7 @@ function App() {
             <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
             <Routes>
-                <Route path="/" element={<Home todayQuiz={todayQuiz} />} />
+                <Route path="/" element={<Home dailyQuiz={dailyQuiz} />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/contests" element={<Contests />} />
                 <Route path="/challenges" element={<Challenges />} />

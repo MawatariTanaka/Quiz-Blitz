@@ -2,30 +2,37 @@
 
 import { useState, useEffect } from 'react';
 
-export default function Home(todayQuiz) {
+export default function Home(dailyQuiz) {
     //Temporary variable
+    const [a, setA] = useState(0);
     const [type, setType] = useState('single');
     const [questionJSX, setQuestionJSX] = useState(null);
     const [answersJSX, setAnswersJSX] = useState(null);
-    useEffect(() => {
-        const updateAnswer = (ans) => {
-            if (ans) {
-                if (ans.length > 0) {
-                    return ans.map((answer, index) => (
-                        <div key={index} className="daily-answer-container">
-                            {answer}
-                        </div>
-                    ));
-                }
+    const updateAnswer = (ans) => {
+        if (ans) {
+            if (ans.length > 0) {
+                return ans.map((answer, index) => (
+                    <div
+                        key={index}
+                        className={`daily-answer-container ${
+                            type === 'single' && 'rounded-container'
+                        }`}
+                    >
+                        {answer}
+                    </div>
+                ));
             }
-        };
-        if (todayQuiz) {
-            const today = todayQuiz.todayQuiz;
-            setQuestionJSX(today.question);
-            setAnswersJSX(updateAnswer(today.answers));
-            setType(today.type);
         }
-    }, [todayQuiz]);
+    };
+    useEffect(() => {
+        const daily = dailyQuiz.dailyQuiz;
+        if (daily) {
+            setQuestionJSX(daily.question);
+            setA(daily.answers.length);
+            setAnswersJSX(updateAnswer(daily.answers));
+            setType(daily.type);
+        }
+    }, [dailyQuiz]);
     return (
         <main className="home-main">
             <section className="daily-quiz">
@@ -38,8 +45,8 @@ export default function Home(todayQuiz) {
                     >
                         {questionJSX ? questionJSX : 'Loading...'}
                     </div>
-                    <div className="answer-container">
-                        {answersJSX ? answersJSX : 'Loading...'}
+                    <div className={`answers-container answers-${a}-container`}>
+                        {answersJSX}
                     </div>
                 </div>
             </section>
