@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.scss';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from './backendComponents/firebaseConfig';
 
 import Header from './frontendComponents/Header';
 import Home from './frontendComponents/subdomain/Home';
@@ -11,12 +14,35 @@ import Challenges from './frontendComponents/subdomain/Challenges';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('home');
+    const [quizList, setQuizList] = useState(null);
+    const [todayQuiz, setTodayQuiz] = useState(null);
+    const [a, setA] = useState(0);
+    useEffect(() => {
+        const quizCollectionReference = collection(db, 'questions');
+        const getQuizList = async () => {
+            const data = await getDocs(quizCollectionReference);
+            setQuizList(
+                data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            );
+            if (!quizList) {
+                setA(a + 1);
+            }
+        };
+        getQuizList();
+    }, [a]);
+    useEffect(() => {
+        if (quizList) {
+            const today = quizList[Math.floor(Math.random() * quizList.length)];
+            setTodayQuiz(today);
+        }
+    }, [quizList]);
+
     return (
         <Router className="App">
             <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home todayQuiz={todayQuiz} />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/contests" element={<Contests />} />
                 <Route path="/challenges" element={<Challenges />} />
