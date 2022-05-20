@@ -14,6 +14,13 @@
         font-size: 2rem;
         font-weight: 700;
     }
+    button {
+        width: 100%;
+        @include container-border-radius(1rem, 1rem, 1rem, 1rem);
+        font-size: 1.5rem;
+        background-color: $primary-color;
+        color: white;
+    }
 }
 
 .daily-quiz-container {
@@ -40,4 +47,8 @@
 
 .rounded-container {
     border-radius: 3rem;
+}
+
+.selected-answer {
+    background-color: $secondary-color;
 }

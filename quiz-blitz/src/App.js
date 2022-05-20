@@ -34,7 +34,6 @@ function App() {
         if (quizList && !dailyQuiz) {
             const daily = quizList[Math.floor(Math.random() * quizList.length)];
             setDailyQuiz(daily);
-            console.log(daily);
         }
     }, [quizList]);
 
