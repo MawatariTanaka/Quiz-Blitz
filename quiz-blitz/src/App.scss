@@ -14,6 +14,56 @@ body {
     font-size: 16px;
 }
 
+@mixin container-border-radius($top, $right, $bottom, $left) {
+    padding: $top $right $bottom $left;
+    border: double 5px $primary-color;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.question-container {
+    @include container-border-radius(2rem, 1.5rem, 2rem, 1.5rem);
+}
+
+.answers-container {
+    padding: 1rem 0;
+
+    div {
+        @include container-border-radius(1rem, 1rem, 1rem, 1rem);
+    }
+}
+
+.answers-4-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 5px;
+    column-gap: 5px;
+}
+
+.rounded-container {
+    border-radius: 3rem;
+}
+
+.selected-answer {
+    background-color: $secondary-color;
+}
+
+.correct-answer {
+    background-color: $primary-color;
+    color: white;
+}
+
+.unchosen-answer {
+    background-color: $primary-color;
+    border: double 5px $authentication-color !important;
+    color: white;
+}
+
+.wrong-answer {
+    background-color: $authentication-color;
+    color: white;
+}
+
 @import './frontendComponents/styles/Header';
 @import './frontendComponents/styles/Home';
 @import './frontendComponents/styles/Courses';

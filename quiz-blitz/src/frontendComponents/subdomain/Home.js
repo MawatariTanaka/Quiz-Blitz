@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function Home({ dailyQuiz }) {
     const [type, setType] = useState(null);
+    const [submit, setSubmit] = useState(false);
     const [answerArray, setAnswerArray] = useState(null);
     const [answerChoiceArray, setAnswerChoiceArray] = useState(null);
     const [correctAnswerArray, setCorrectAnswerArray] = useState(null);
@@ -19,7 +20,6 @@ export default function Home({ dailyQuiz }) {
             }
         }
         setAnswerChoiceArray(currentAnswerChoiceArray);
-        console.log(currentAnswerChoiceArray);
         setAnswersJSX(updateAnswer(answerArray));
     };
     const updateAnswer = (ans) => {
@@ -39,6 +39,45 @@ export default function Home({ dailyQuiz }) {
             }
         }
     };
+    const finalUpdateAnswer = () => {
+        if (!submit) {
+            setSubmit(true);
+            let answerState = [];
+            for (let i = 0; i < answerArray.length; i++) {
+                if (correctAnswerArray[i]) {
+                    if (answerChoiceArray[i]) {
+                        answerState.push('correct');
+                    } else {
+                        answerState.push('unchosen');
+                    }
+                } else {
+                    if (answerChoiceArray[i]) {
+                        answerState.push('wrong');
+                    } else {
+                        answerState.push('neutral');
+                    }
+                }
+            }
+            console.log(answerState);
+            setAnswersJSX(
+                answerArray.map((answer, index) => (
+                    <div
+                        key={index}
+                        className={`daily-answer-container ${
+                            type === 'single' && 'rounded-container'
+                        } ${
+                            answerState[index] === 'correct' && 'correct-answer'
+                        } ${
+                            answerState[index] === 'unchosen' &&
+                            'unchosen-answer'
+                        } ${answerState[index] === 'wrong' && 'wrong-answer'}`}
+                    >
+                        {answer}
+                    </div>
+                ))
+            );
+        }
+    };
     //Temporary variable
     const [a, setA] = useState(0);
     const [c, setC] = useState(0);
@@ -56,17 +95,16 @@ export default function Home({ dailyQuiz }) {
             if (type && a && answerArray) {
                 for (let i = 0; i < a; i++) {
                     b.push(false);
-                    if (type === 'single') {
-                        if (ansArray[i] === correctAns) {
-                            d.push(true);
-                        } else {
-                            d.push(false);
+                    let f = false;
+                    for (let j = 0; j < correctAns.length; j++) {
+                        if (ansArray[i] === correctAns[j]) {
+                            f = true;
                         }
                     }
+                    d.push(f);
                 }
                 setAnswerChoiceArray(b);
                 setCorrectAnswerArray(d);
-                console.log(d);
                 if (answerChoiceArray && correctAnswerArray) {
                     setQuestionJSX(daily.question);
                     setAnswersJSX(updateAnswer(answerArray));
@@ -93,13 +131,16 @@ export default function Home({ dailyQuiz }) {
                     <div className={`answers-container answers-${a}-container`}>
                         {answersJSX}
                     </div>
-                    <button
-                        className={`${
-                            type === 'single' && 'rounded-container'
-                        }`}
-                    >
-                        Chốt Câu Trả Lời
-                    </button>
+                    {answersJSX && !submit && (
+                        <button
+                            onClick={() => finalUpdateAnswer()}
+                            className={`${
+                                type === 'single' && 'rounded-container'
+                            }`}
+                        >
+                            Chốt Câu Trả Lời
+                        </button>
+                    )}
                 </div>
             </section>
         </main>
