@@ -32,7 +32,14 @@ function App() {
     }, [a]);
     useEffect(() => {
         if (quizList && !dailyQuiz) {
-            const daily = quizList[Math.floor(Math.random() * quizList.length)];
+            const customQuizList = quizList.filter(
+                (quiz) => quiz.subject === 'biology'
+            );
+
+            const daily =
+                customQuizList[
+                    Math.floor(Math.random() * customQuizList.length)
+                ];
             setDailyQuiz(daily);
         }
     }, [quizList]);

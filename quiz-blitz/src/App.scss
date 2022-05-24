@@ -30,6 +30,12 @@ body {
 
     div {
         @include container-border-radius(1rem, 1rem, 1rem, 1rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+            display:block;
+        }
     }
 }
 
@@ -67,3 +73,4 @@ body {
 @import './frontendComponents/styles/Header';
 @import './frontendComponents/styles/Home';
 @import './frontendComponents/styles/Courses';
+@import './frontendComponents/styles/Challenges'

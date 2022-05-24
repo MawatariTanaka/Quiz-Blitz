@@ -33,7 +33,7 @@ export default function Home({ dailyQuiz }) {
                             type === 'single' && 'rounded-container'
                         } ${answerChoiceArray[index] && 'selected-answer'}`}
                     >
-                        {answer}
+                        <span>{answer}</span>
                     </div>
                 ));
             }
