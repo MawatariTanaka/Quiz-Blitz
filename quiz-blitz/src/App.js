@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import './App.scss';
 
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './backendComponents/firebaseConfig';
 
@@ -11,12 +10,14 @@ import Home from './frontendComponents/subdomain/Home';
 import Courses from './frontendComponents/subdomain/Courses';
 import Contests from './frontendComponents/subdomain/Contests';
 import Challenges from './frontendComponents/subdomain/Challenges';
+import Gameplay from './frontendComponents/subdomain/Gameplay';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('home');
     const [quizList, setQuizList] = useState(null);
     const [dailyQuiz, setDailyQuiz] = useState(null);
     const [a, setA] = useState(0);
+    const [currentChallenge, setCurrentChallenge] = useState(null);
     useEffect(() => {
         const quizCollectionReference = collection(db, 'questions');
         const getQuizList = async () => {
@@ -32,29 +33,36 @@ function App() {
     }, [a]);
     useEffect(() => {
         if (quizList && !dailyQuiz) {
-            const customQuizList = quizList.filter(
-                (quiz) => quiz.subject === 'biology'
-            );
-
-            const daily =
-                customQuizList[
-                    Math.floor(Math.random() * customQuizList.length)
-                ];
+            const daily = quizList[Math.floor(Math.random() * quizList.length)];
             setDailyQuiz(daily);
         }
     }, [quizList]);
 
     return (
-        <Router className="App">
+        <BrowserRouter className="App">
             <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
             <Routes>
                 <Route path="/" element={<Home dailyQuiz={dailyQuiz} />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/contests" element={<Contests />} />
-                <Route path="/challenges" element={<Challenges />} />
+                <Route
+                    path="/challenges"
+                    element={
+                        <Challenges setCurrentChallenge={setCurrentChallenge} />
+                    }
+                />
+                <Route
+                    path="/challenges-gameplay"
+                    element={
+                        <Gameplay
+                            quizList={quizList}
+                            currentChallenge={currentChallenge}
+                        />
+                    }
+                />
             </Routes>
-        </Router>
+        </BrowserRouter>
     );
 }
 

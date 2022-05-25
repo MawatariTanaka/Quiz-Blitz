@@ -58,7 +58,6 @@ export default function Home({ dailyQuiz }) {
                     }
                 }
             }
-            console.log(answerState);
             setAnswersJSX(
                 answerArray.map((answer, index) => (
                     <div
