@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { useState, useEffect } from 'react';
+
+const Latex = require('react-latex');
 
 export default function Home({ dailyQuiz }) {
     const [type, setType] = useState(null);
@@ -125,7 +125,9 @@ export default function Home({ dailyQuiz }) {
                             type === 'single' && 'rounded-container'
                         }`}
                     >
-                        {questionJSX ? questionJSX : 'Loading...'}
+                        <Latex>
+                            {questionJSX ? questionJSX : 'Đang tải...'}
+                        </Latex>
                     </div>
                     <div className={`answers-container answers-${a}-container`}>
                         {answersJSX}
