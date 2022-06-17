@@ -63,3 +63,21 @@
     height: 1.25rem;
     margin-right: 0.5rem;
 }
+
+.challenge-quiz-container {
+    padding: 3rem;
+}
+
+.timer-container {
+    width: 25vw;
+    padding: 1rem;
+    border: double 5px $primary-color;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}

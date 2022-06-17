@@ -10,6 +10,10 @@ export default function Home({ dailyQuiz }) {
     const [correctAnswerArray, setCorrectAnswerArray] = useState(null);
     const [questionJSX, setQuestionJSX] = useState(null);
     const [answersJSX, setAnswersJSX] = useState(null);
+    const [buttonText, setButtonText] = useState(
+        'Đang kiểm tra độ mượt của nút bấm...'
+    );
+
     const changeAnswerChoice = (index) => {
         let currentAnswerChoiceArray = answerChoiceArray;
         for (let i = 0; i < currentAnswerChoiceArray.length; i++) {
@@ -29,11 +33,11 @@ export default function Home({ dailyQuiz }) {
                     <div
                         key={index}
                         onClick={() => changeAnswerChoice(index)}
-                        className={`daily-answer-container ${
+                        className={`${
                             type === 'single' && 'rounded-container'
                         } ${answerChoiceArray[index] && 'selected-answer'}`}
                     >
-                        <span>{answer}</span>
+                        <Latex>{answer}</Latex>
                     </div>
                 ));
             }
@@ -62,7 +66,7 @@ export default function Home({ dailyQuiz }) {
                 answerArray.map((answer, index) => (
                     <div
                         key={index}
-                        className={`daily-answer-container ${
+                        className={` ${
                             type === 'single' && 'rounded-container'
                         } ${
                             answerState[index] === 'correct' && 'correct-answer'
@@ -71,10 +75,23 @@ export default function Home({ dailyQuiz }) {
                             'unchosen-answer'
                         } ${answerState[index] === 'wrong' && 'wrong-answer'}`}
                     >
-                        {answer}
+                        <Latex>{answer}</Latex>
                     </div>
                 ))
             );
+            // Compare answerChoiceArray and correctAnswerArray
+            let correctAnswer = true;
+            for (let i = 0; i < answerChoiceArray.length; i++) {
+                if (answerChoiceArray[i] != correctAnswerArray[i]) {
+                    correctAnswer = false;
+                    break;
+                }
+            }
+            if (correctAnswer) {
+                setButtonText('Tuyệt Vời!');
+            } else {
+                setButtonText('Hừm...');
+            }
         }
     };
     //Temporary variable
@@ -86,6 +103,7 @@ export default function Home({ dailyQuiz }) {
         if (daily) {
             setA(daily.answers.length);
             setType(daily.type);
+            setButtonText('Xác Nhận');
             const ansArray = daily.answers.sort(() => Math.random() - 0.5);
             const correctAns = daily.correct;
             setAnswerArray(ansArray);
@@ -126,22 +144,23 @@ export default function Home({ dailyQuiz }) {
                         }`}
                     >
                         <Latex>
-                            {questionJSX ? questionJSX : 'Đang tải...'}
+                            {questionJSX
+                                ? questionJSX
+                                : 'Đang chờ câu hỏi đến nhà...'}
                         </Latex>
                     </div>
                     <div className={`answers-container answers-${a}-container`}>
                         {answersJSX}
                     </div>
-                    {answersJSX && !submit && (
-                        <button
-                            onClick={() => finalUpdateAnswer()}
-                            className={`${
-                                type === 'single' && 'rounded-container'
-                            }`}
-                        >
-                            Chốt Câu Trả Lời
-                        </button>
-                    )}
+
+                    <button
+                        onClick={() => finalUpdateAnswer()}
+                        className={`${
+                            type === 'single' && 'rounded-container'
+                        }`}
+                    >
+                        {buttonText}
+                    </button>
                 </div>
             </section>
         </main>
